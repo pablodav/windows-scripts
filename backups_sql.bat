@@ -26,6 +26,13 @@ call %BVARIABLES%
 
 set LOG_FILE=%LOG_FOLDER%\%DATABASE%.log.txt
 
+:differential
+set BTYPE=DIFFERENTIAL, NOFORMAT, NOINIT
+
+
+:full
+set BTYPE=NOFORMAT, INIT
+
 
 echo Server is %SERVER% > %LOG_FILE%
 echo Database is %DATABASE% >> %LOG_FILE%
@@ -49,9 +56,3 @@ IF BACKUPTYPE==full (
 sqlcmd -S %SERVER% -Q "DBCC SHRINKDATABASE ($(DATABASE), 10);" >> %LOG_FILE%
 )
 
-:differential
-set BTYPE=DIFFERENTIAL, NOFORMAT, NOINIT
-
-
-:full
-set BTYPE=NOFORMAT, INIT
