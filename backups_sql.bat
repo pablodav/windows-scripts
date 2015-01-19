@@ -1,7 +1,7 @@
 @echo off
 :: This is a start sqlcmd intent to avoid usage of same lines in script repeatedly. 
-:: This script was created by Pablo Estigarribia at 09/12/2014. 
-:: Version 3
+:: This script was created by Pablo Estigarribia at 19/12/2014. 
+:: Version 4
 
 set SQL_SCRIPTS=E:\SQL_SCRIPTS
 set LOG_FOLDER=%SQL_SCRIPTS%\Logs
