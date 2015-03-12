@@ -45,7 +45,7 @@ call:full
 )
 
 ::Verify if option %2 was full or diff and exit with error if it does not exist.
-if %BTYPEVAR==OK (
+if %BTYPEVAR%==OK (
 echo BTYPEVAR is ok, continue with backup script >> %LOG_FILE%
 echo Backup type is %BACKUPTYPE% >> %LOG_FILE%
 ) else (
