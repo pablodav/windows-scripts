@@ -3,6 +3,14 @@
 :: This script was created by Pablo Estigarribia at 19/12/2014. 
 :: Version 4
 
+::Get date and time on variables
+set dd=%date%%Time%
+set day=%dd:~0,2%
+set month=%dd:~3,2%
+set year=%dd:~6,4%
+set hour=%dd:~11,2%
+set minute=%dd:~14,2% 
+
 ::Set log folder working with "Working directory"
 set SQL_SCRIPTS=%CD%
 set LOG_FOLDER=%SQL_SCRIPTS%\Logs
@@ -11,6 +19,9 @@ set LOG_FOLDER=%SQL_SCRIPTS%\Logs
 if not exist "%LOG_FOLDER%" (
 md %LOG_FOLDER%
 )
+
+:: Clean old logs.
+FORFILES /p %LOGS_FOLDER%  /m *.txt /d -15 /c "CMD /C del /Q /F @PATH"
 
 :: References for variables with sqlcmd and use in .sql file called from sqlcmd
 :: http://msdn.microsoft.com/en-us/library/ms188714.aspx
@@ -29,7 +40,7 @@ set BACKUPTYPE=%2
 ::Execute variables_dbname.bat from %1 to set variables for example above.
 call %BVARIABLES%
 ::Set log file utilizing database name.
-set LOG_FILE=%LOG_FOLDER%\%DATABASE%.log.txt
+set LOG_FILE=%LOG_FOLDER%\%DATABASE%_%day%_%month%_%year%.log.txt
 
 echo Server is %SERVER% > %LOG_FILE%
 echo Database is %DATABASE% >> %LOG_FILE%
