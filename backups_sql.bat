@@ -1,7 +1,7 @@
 @echo off
 :: This is a start sqlcmd intent to avoid usage of same lines in script repeatedly. 
-:: This script was created by Pablo Estigarribia at 19/12/2014. 
-:: Version 4
+:: This script was created by Pablo Estigarribia at 25/04/2015. 
+:: Version 5
 
 ::Get date and time on variables
 set dd=%date%%Time%
@@ -79,7 +79,8 @@ set BTYPE=DIFFERENTIAL, NOFORMAT, NOINIT
 set BTYPEVAR=OK
 goto:eof
 
+::Added FORMAT to free space correctly on some backups.
 :full
-set BTYPE=NOFORMAT, INIT
+set BTYPE=FORMAT, INIT
 set BTYPEVAR=OK
 goto:eof
