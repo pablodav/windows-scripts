@@ -1,15 +1,10 @@
 @echo off
-:: This is a start sqlcmd intent to avoid usage of same lines in script repeatedly. 
-:: This script was created by Pablo Estigarribia at 25/04/2015. 
-:: Version 5
+:: This is a start sqlcmd intent to avoid usage of same lines in script repeatedly.
+:: This script was created by Pablo Estigarribia at 25/04/2015.
+:: Version 7
+Setlocal EnableDelayedExpansion
 
-::Get date and time on variables
-set dd=%date%%Time%
-set day=%dd:~0,2%
-set month=%dd:~3,2%
-set year=%dd:~6,4%
-set hour=%dd:~11,2%
-set minute=%dd:~14,2% 
+call logtimestamp.bat
 
 ::Set log folder working with "Working directory"
 set SQL_SCRIPTS=%CD%
@@ -26,7 +21,7 @@ FORFILES /p %LOGS_FOLDER%  /m *.txt /d -15 /c "CMD /C del /Q /F @PATH"
 :: References for variables with sqlcmd and use in .sql file called from sqlcmd
 :: http://msdn.microsoft.com/en-us/library/ms188714.aspx
 
-:: Usage: sqlcommon.bat variables_dbname.bat TYPE 
+:: Usage: sqlcommon.bat variables_dbname.bat TYPE
 :: type could be: (full/diff)
 :: variables_dbname.bat should contain:
 :: set SERVER=Server\instance (\instance only is needed if it is not default)
@@ -40,7 +35,7 @@ set BACKUPTYPE=%2
 ::Execute variables_dbname.bat from %1 to set variables for example above.
 call %BVARIABLES%
 ::Set log file utilizing database name.
-set LOG_FILE=%LOG_FOLDER%\%DATABASE%_%day%_%month%_%year%.log.txt
+set LOG_FILE=%LOG_FOLDER%\%DATABASE%_%logtimestamp%.log.txt
 
 echo Server is %SERVER% > %LOG_FILE%
 echo Database is %DATABASE% >> %LOG_FILE%
@@ -83,4 +78,7 @@ goto:eof
 :full
 set BTYPE=FORMAT, INIT
 set BTYPEVAR=OK
+if exist "%BACKUP_FILE%" (
+del /Q /F %BACKUP_FILE% >> %LOG_FILE%
+)
 goto:eof
